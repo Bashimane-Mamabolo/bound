@@ -1,1 +1,17 @@
+# spring setup
+spring:
+  profiles:
+    active: dev
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+# Openapi swagger setup
+springdoc:
+  default-produces-media-type: application/json
+
+#Servelet server-routes setup
+server:
+  servlet:
+    context-path: /api/v1/  #request mapping
