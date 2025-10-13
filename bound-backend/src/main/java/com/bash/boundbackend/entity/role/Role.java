@@ -29,7 +29,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles") //be careful of typos
-    @JsonIgnore
+    @JsonIgnore  // avoid serialization of this one as a response
     private List<User> users;
 
     @CreatedDate
