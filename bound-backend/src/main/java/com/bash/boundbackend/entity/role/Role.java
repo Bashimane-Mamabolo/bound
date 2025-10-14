@@ -22,7 +22,7 @@ import java.util.List;
 public class Role {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     private Integer Id;
 
     @Column(unique = true)  // No same role multiple times
