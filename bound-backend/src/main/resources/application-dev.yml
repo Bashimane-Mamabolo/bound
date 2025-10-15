@@ -1,9 +1,11 @@
 spring:
+  # database setup
   datasource:
     url: jdbc:postgresql://localhost:5432/bound_social_club
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  #jpa setup for postgres data
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,7 +31,7 @@ spring:
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
-
+# Custom app settings
 application:
   security:
     jwt:
@@ -38,5 +40,6 @@ application:
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
+# my server port
 server:
   port: 8088
