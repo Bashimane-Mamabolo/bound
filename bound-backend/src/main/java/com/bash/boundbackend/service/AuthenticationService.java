@@ -1,12 +1,15 @@
 package com.bash.boundbackend.service;
 
+import com.bash.boundbackend.common.constants.EmailTemplateName;
 import com.bash.boundbackend.dto.request.UserRegistrationRequest;
 import com.bash.boundbackend.entity.user.Token;
 import com.bash.boundbackend.entity.user.User;
 import com.bash.boundbackend.repository.RoleRepository;
 import com.bash.boundbackend.repository.TokenRepository;
 import com.bash.boundbackend.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +27,11 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final EmailService emailService;
+    @Value("${application.mailing.frontend.activation-url}")
+    private String activationUrl;
 
-    public void registerUser(UserRegistrationRequest registrationRequest) {
+    public void registerUser(UserRegistrationRequest registrationRequest) throws MessagingException {
         // TODO - better fail mechanism
         
         // assign user role by default
@@ -47,12 +53,20 @@ public class AuthenticationService {
         sendUserRegistrationEmail(user);
     }
 
-    private void sendUserRegistrationEmail(User user) {
+    private void sendUserRegistrationEmail(User user) throws MessagingException {
         // generate activation token/code and save it to the database
         var newActivationCode = generateAndSaveActivationToken(user);
 
         // send the user email
-        
+        emailService.sendUserEmail(
+                user.getEmail(),
+                user.getFullName(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationUrl,
+                newActivationCode,
+                "Account activation"
+        );
+
 
     }
 

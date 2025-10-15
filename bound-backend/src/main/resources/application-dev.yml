@@ -12,7 +12,7 @@ spring:
       hibernate:
         format_sql: true
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 #Valid for different providers
   mail:
     host: localhost
@@ -35,3 +35,8 @@ application:
     jwt:
       secret-key: 85661738b74b3e8564b21f7cd1853bbac76c35754876d46c469f2fb6365de17f
       expiration: 8640000 #expires in one day
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+server:
+  port: 8088

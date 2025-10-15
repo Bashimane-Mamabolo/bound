@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Email Confirmation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .email-header {
+            background-color: #004aad;
+            color: #ffffff;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .email-body {
+            padding: 30px;
+            line-height: 1.6;
+        }
+        .email-body h2 {
+            color: #004aad;
+        }
+        .email-button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 25px;
+            background-color: #004aad;
+            color: #ffffff !important;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .email-button:hover {
+            background-color: #003580;
+        }
+        .email-footer {
+            background-color: #f1f3f6;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: #777777;
+        }
+        .code-box {
+            background-color: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 16px;
+            letter-spacing: 2px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <h1>Confirm Your Email Address</h1>
+    </div>
+
+    <div class="email-body">
+        <p>Hello <strong th:text="${username}">User</strong>,</p>
+
+        <p>Thank you for registering with us! To activate your account, please confirm your email address by clicking the button below:</p>
+
+        <p style="text-align: center;">
+            <a th:href="${connectionUrl}" class="email-button">Confirm Email</a>
+        </p>
+
+        <p>If the button above doesn’t work, you can also copy and paste this activation code:</p>
+
+        <p style="text-align: center;">
+            <span class="code-box" th:text="${activationCode}">ABC123</span>
+        </p>
+
+        <p>This code expires in 15 minutes, so please verify soon.</p>
+
+        <p>Cheers,<br/>
+            The BashBound Team</p>
+    </div>
+
+    <div class="email-footer">
+        <p>&copy; 2025 BashBound. All rights reserved.<br/>
+            This is an automated message, please do not reply.</p>
+    </div>
+</div>
+</body>
+</html>

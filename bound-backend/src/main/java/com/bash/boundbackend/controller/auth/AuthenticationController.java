@@ -3,6 +3,7 @@ package com.bash.boundbackend.controller.auth;
 import com.bash.boundbackend.dto.request.UserRegistrationRequest;
 import com.bash.boundbackend.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> registerUser(
         @RequestBody @Valid UserRegistrationRequest registrationRequest
-    ){
+    ) throws MessagingException {
         authenticationService.registerUser(registrationRequest);
         return  ResponseEntity.accepted().build();
     }
