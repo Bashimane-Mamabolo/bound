@@ -8,8 +8,10 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.core.userdetails.UserDetailsService;
 
+
+
+// Tells spring how to authenticate users, where to find them, and how to verify passwords.
 @Configuration
 @RequiredArgsConstructor
 public class SecurityBeansConfig {
