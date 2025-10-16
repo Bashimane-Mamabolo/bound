@@ -44,4 +44,11 @@ public class AuthenticationController {
 
     }
 
+    @GetMapping("/activate-account")
+    public void activateUserAccount(
+            @RequestParam String code
+    ) throws MessagingException {
+        authenticationService.activateUserAccount(code);
+
+    }
 }

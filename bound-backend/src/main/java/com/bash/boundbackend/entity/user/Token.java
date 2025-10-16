@@ -25,6 +25,7 @@ public class Token {
     private LocalDateTime createdAt;
     private LocalDateTime expiresAt;
     private LocalDateTime validatedAt;
+    private boolean isUsed;
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)

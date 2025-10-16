@@ -10,10 +10,12 @@ import com.bash.boundbackend.repository.RoleRepository;
 import com.bash.boundbackend.repository.TokenRepository;
 import com.bash.boundbackend.repository.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -127,5 +129,41 @@ public class AuthenticationService {
                 .builder()
                 .jwtToken(jwtToken)
                 .build();
+    }
+
+    // atomicity - matters if I'm updating both user and token tables.(same time)
+    // Entire operation succeeds ort everything rolls back
+    @Transactional
+    public void activateUserAccount(String code) throws MessagingException {
+        // TODO - define a more specific exception
+        Token savedToken = tokenRepository.findByToken(code)
+                .orElseThrow(() -> new RuntimeException("Input correct " +CODELENGTH+"-digit code."));
+
+        if (savedToken.isUsed()) {
+            throw new RuntimeException("Activation code already used.");
+        }
+
+        // If token is expired send a new one
+        if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
+            sendUserRegistrationEmail(savedToken.getUser());
+            throw new RuntimeException("Activation code expired. New token has been sent");
+
+        }
+
+        // Validate the token and save token
+        // Mark token as used early (to prevent reuse if concurrent thread sneaks in)
+        savedToken.setUsed(true);  //for security completeness
+        savedToken.setValidatedAt(LocalDateTime.now());
+        tokenRepository.save(savedToken);
+
+        // Get user, enable user account and save the state
+        var user = userRepository.findById(savedToken.getUser().getId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setEnabled(true);
+        //User user = savedToken.getUser();
+        userRepository.save(user);
+
+
+
     }
 }
