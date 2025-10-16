@@ -1,6 +1,8 @@
 package com.bash.boundbackend.entity.user;
 
 import com.bash.boundbackend.entity.role.Role;
+import com.bash.boundbackend.modules.book.entity.Book;
+import com.bash.boundbackend.modules.book.entity.BookTransactionHistory;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -52,7 +54,12 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER) //eagerly fetch the list of roles
     private List<Role> roles;
 
-    // List of tokens List<Token>...
+    // One user too many books e.g one user-id in many books
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> bookTransactionHistoryList;
 
 
     @Override

@@ -19,5 +19,9 @@ public class Feedback extends AuditableEntity {
     private Double rating;
     private String comment;
 
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
 
 }
