@@ -1,7 +1,7 @@
 package com.bash.boundbackend.common.handlers;
 
 
-import com.bash.boundbackend.exception.ExceptionResponse;
+import com.bash.boundbackend.common.exception.ExceptionResponse;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.bash.boundbackend.exception.ErrorCodes.*;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice

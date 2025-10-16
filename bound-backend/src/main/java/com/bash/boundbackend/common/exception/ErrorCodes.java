@@ -1,4 +1,4 @@
-package com.bash.boundbackend.exception;
+package com.bash.boundbackend.common.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
