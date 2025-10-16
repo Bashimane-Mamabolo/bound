@@ -44,6 +44,7 @@ public class AuthenticationService {
     private final JwtTokenService jwtTokenService;
 
 
+//    @Transactional
     public void registerUser(UserRegistrationRequest registrationRequest) throws MessagingException {
         // TODO - better fail mechanism
         
@@ -84,7 +85,12 @@ public class AuthenticationService {
     }
 
     private String generateAndSaveActivationToken(User user) {
-        // Generate CODE, build Token/code and save it to DB
+        tokenRepository.findAllValidTokensByUser(user.getId())
+                .forEach(token -> {
+                    token.setExpiresAt(LocalDateTime.now());
+                    token.setUsed(true);
+                });
+
         String generatedCode = generateActivationCode();
         var token = Token.builder()
                 .token(generatedCode)
@@ -92,9 +98,11 @@ public class AuthenticationService {
                 .expiresAt(LocalDateTime.now().plusMinutes(CODEEXPIRATIONMINUTES))
                 .user(user)
                 .build();
+
         tokenRepository.save(token);
         return generatedCode;
     }
+
 
     private String generateActivationCode() {
         String characters = "0123456789";
@@ -133,7 +141,7 @@ public class AuthenticationService {
 
     // atomicity - matters if I'm updating both user and token tables.(same time)
     // Entire operation succeeds ort everything rolls back
-    @Transactional
+//    @Transactional
     public void activateUserAccount(String code) throws MessagingException {
         // TODO - define a more specific exception
         Token savedToken = tokenRepository.findByToken(code)
