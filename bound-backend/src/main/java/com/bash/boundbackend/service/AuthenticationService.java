@@ -1,7 +1,9 @@
 package com.bash.boundbackend.service;
 
 import com.bash.boundbackend.common.constants.EmailTemplateName;
+import com.bash.boundbackend.dto.request.UserAuthenticationRequest;
 import com.bash.boundbackend.dto.request.UserRegistrationRequest;
+import com.bash.boundbackend.dto.response.UserAuthenticationResponse;
 import com.bash.boundbackend.entity.user.Token;
 import com.bash.boundbackend.entity.user.User;
 import com.bash.boundbackend.repository.RoleRepository;
@@ -10,26 +12,35 @@ import com.bash.boundbackend.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
+    @Value("${application.mailing.frontend.activation-url}")
+    private String activationUrl;
+
     private static final int CODELENGTH = 6;
     private static final int CODEEXPIRATIONMINUTES = 15;
+
+
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
-    @Value("${application.mailing.frontend.activation-url}")
-    private String activationUrl;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
+
 
     public void registerUser(UserRegistrationRequest registrationRequest) throws MessagingException {
         // TODO - better fail mechanism
@@ -92,5 +103,29 @@ public class AuthenticationService {
             codeBuilder.append(characters.charAt(randomIndex));
         }
         return codeBuilder.toString();
+    }
+
+    public UserAuthenticationResponse authenticateUser(UserAuthenticationRequest authenticationRequest) {
+        // Authenticate user
+        var authenticationObject = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getEmail(),
+                    authenticationRequest.getPassword()
+            )
+        );
+
+        // Get user and create fullName claims
+        var userClaims = new HashMap<String,Object>();
+        var user = (User) authenticationObject.getPrincipal();
+        userClaims.put("fullName", user.getFullName());
+
+        // Generate jwtToken based on the claims and the user
+        var jwtToken = jwtTokenService.generateJwtToken(userClaims, user);
+
+
+        return UserAuthenticationResponse
+                .builder()
+                .jwtToken(jwtToken)
+                .build();
     }
 }

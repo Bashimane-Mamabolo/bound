@@ -1,6 +1,8 @@
 package com.bash.boundbackend.controller.auth;
 
+import com.bash.boundbackend.dto.request.UserAuthenticationRequest;
 import com.bash.boundbackend.dto.request.UserRegistrationRequest;
+import com.bash.boundbackend.dto.response.UserAuthenticationResponse;
 import com.bash.boundbackend.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
@@ -29,6 +31,17 @@ public class AuthenticationController {
     ) throws MessagingException {
         authenticationService.registerUser(registrationRequest);
         return  ResponseEntity.accepted().build();
+    }
+
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<UserAuthenticationResponse> authenticateUser(
+            @RequestBody @Valid UserAuthenticationRequest authenticationRequest
+
+    ) {
+
+        return ResponseEntity.ok(authenticationService.authenticateUser(authenticationRequest));
+
     }
 
 }
