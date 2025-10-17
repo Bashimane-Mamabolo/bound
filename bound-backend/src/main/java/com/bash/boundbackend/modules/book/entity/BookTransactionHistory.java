@@ -1,6 +1,6 @@
 package com.bash.boundbackend.modules.book.entity;
 
-import com.bash.boundbackend.entity.user.User;
+import com.bash.boundbackend.modules.auth.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

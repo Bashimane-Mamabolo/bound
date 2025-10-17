@@ -1,4 +1,4 @@
-package com.bash.boundbackend.dto.response;
+package com.bash.boundbackend.modules.auth.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.bash.boundbackend.service;
+package com.bash.boundbackend.modules.auth.service;
 
 
 import io.jsonwebtoken.Claims;

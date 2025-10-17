@@ -1,16 +1,15 @@
-package com.bash.boundbackend.service;
+package com.bash.boundbackend.modules.auth.service;
 
 import com.bash.boundbackend.common.constants.EmailTemplateName;
-import com.bash.boundbackend.dto.request.UserAuthenticationRequest;
-import com.bash.boundbackend.dto.request.UserRegistrationRequest;
-import com.bash.boundbackend.dto.response.UserAuthenticationResponse;
-import com.bash.boundbackend.entity.user.Token;
-import com.bash.boundbackend.entity.user.User;
-import com.bash.boundbackend.repository.RoleRepository;
-import com.bash.boundbackend.repository.TokenRepository;
-import com.bash.boundbackend.repository.UserRepository;
+import com.bash.boundbackend.modules.auth.dto.request.UserAuthenticationRequest;
+import com.bash.boundbackend.modules.auth.dto.request.UserRegistrationRequest;
+import com.bash.boundbackend.modules.auth.dto.response.UserAuthenticationResponse;
+import com.bash.boundbackend.modules.auth.entity.Token;
+import com.bash.boundbackend.modules.auth.entity.User;
+import com.bash.boundbackend.modules.auth.repository.RoleRepository;
+import com.bash.boundbackend.modules.auth.repository.TokenRepository;
+import com.bash.boundbackend.modules.auth.repository.UserRepository;
 import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;

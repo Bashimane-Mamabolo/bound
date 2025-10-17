@@ -1,9 +1,9 @@
-package com.bash.boundbackend.controller.auth;
+package com.bash.boundbackend.modules.auth.controller;
 
-import com.bash.boundbackend.dto.request.UserAuthenticationRequest;
-import com.bash.boundbackend.dto.request.UserRegistrationRequest;
-import com.bash.boundbackend.dto.response.UserAuthenticationResponse;
-import com.bash.boundbackend.service.AuthenticationService;
+import com.bash.boundbackend.modules.auth.dto.request.UserAuthenticationRequest;
+import com.bash.boundbackend.modules.auth.dto.request.UserRegistrationRequest;
+import com.bash.boundbackend.modules.auth.dto.response.UserAuthenticationResponse;
+import com.bash.boundbackend.modules.auth.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;

@@ -1,6 +1,5 @@
-package com.bash.boundbackend.entity.user;
+package com.bash.boundbackend.modules.auth.entity;
 
-import com.bash.boundbackend.entity.role.Role;
 import com.bash.boundbackend.modules.book.entity.Book;
 import com.bash.boundbackend.modules.book.entity.BookTransactionHistory;
 import jakarta.persistence.*;

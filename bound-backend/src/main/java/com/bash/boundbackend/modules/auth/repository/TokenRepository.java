@@ -1,6 +1,6 @@
-package com.bash.boundbackend.repository;
+package com.bash.boundbackend.modules.auth.repository;
 
-import com.bash.boundbackend.entity.user.Token;
+import com.bash.boundbackend.modules.auth.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

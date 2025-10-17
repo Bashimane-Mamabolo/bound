@@ -1,8 +1,7 @@
-package com.bash.boundbackend.entity.user;
+package com.bash.boundbackend.modules.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 

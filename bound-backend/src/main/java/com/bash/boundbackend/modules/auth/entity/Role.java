@@ -1,7 +1,6 @@
-package com.bash.boundbackend.entity.role;
+package com.bash.boundbackend.modules.auth.entity;
 
 
-import com.bash.boundbackend.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

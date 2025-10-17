@@ -1,6 +1,5 @@
-package com.bash.boundbackend.security.config;
+package com.bash.boundbackend.modules.auth.security;
 
-import com.bash.boundbackend.security.JwtTokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

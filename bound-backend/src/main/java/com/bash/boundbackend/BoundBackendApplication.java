@@ -1,7 +1,7 @@
 package com.bash.boundbackend;
 
-import com.bash.boundbackend.entity.role.Role;
-import com.bash.boundbackend.repository.RoleRepository;
+import com.bash.boundbackend.modules.auth.entity.Role;
+import com.bash.boundbackend.modules.auth.repository.RoleRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;

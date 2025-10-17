@@ -1,6 +1,6 @@
 package com.bash.boundbackend.config;
 
-import com.bash.boundbackend.entity.user.User;
+import com.bash.boundbackend.modules.auth.entity.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
-//@Configuration
+@Configuration
 public class ApplicationAuditConfig implements AuditorAware<Integer> {
 
 

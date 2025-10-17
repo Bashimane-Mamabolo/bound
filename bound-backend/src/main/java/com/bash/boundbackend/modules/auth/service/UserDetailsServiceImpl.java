@@ -1,6 +1,6 @@
-package com.bash.boundbackend.service;
+package com.bash.boundbackend.modules.auth.service;
 
-import com.bash.boundbackend.repository.UserRepository;
+import com.bash.boundbackend.modules.auth.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

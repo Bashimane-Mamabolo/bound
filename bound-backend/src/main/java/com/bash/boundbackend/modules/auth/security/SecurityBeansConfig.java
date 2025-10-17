@@ -1,4 +1,4 @@
-package com.bash.boundbackend.security.config;
+package com.bash.boundbackend.modules.auth.security;
 
 import com.bash.boundbackend.config.ApplicationAuditConfig;
 import lombok.RequiredArgsConstructor;
