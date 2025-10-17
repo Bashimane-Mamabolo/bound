@@ -1,5 +1,6 @@
 package com.bash.boundbackend.modules.book.service;
 
+import com.bash.boundbackend.common.exception.OperationNotPermittedException;
 import com.bash.boundbackend.common.utils.PageResponse;
 import com.bash.boundbackend.modules.auth.entity.User;
 import com.bash.boundbackend.modules.book.dto.BookMapper;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.bash.boundbackend.modules.book.service.BookSpecification.withOwnerId;
 
@@ -119,5 +121,20 @@ public class BookService {
                 borrowedBooks.isFirst(),
                 borrowedBooks.isLast()
         );
+    }
+
+    // User with required id [OWNER] can update the book status
+    public Integer updateBookShareableStatus(Integer bookId, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(()-> new EntityNotFoundException("No book found with Id: " + bookId));
+        if (!Objects.equals(user.getId(), book.getOwner().getId())) {
+            // throw custom exception and handle this exception
+            throw new OperationNotPermittedException("Not authorized to update book's shareable status");
+        }
+        book.setShareable(!book.isShareable()); //inverse the value, no hardcoding
+        bookRepository.save(book);
+
+        return bookId;
     }
 }

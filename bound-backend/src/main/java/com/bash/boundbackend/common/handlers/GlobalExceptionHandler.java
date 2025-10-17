@@ -2,6 +2,7 @@ package com.bash.boundbackend.common.handlers;
 
 
 import com.bash.boundbackend.common.exception.ExceptionResponse;
+import com.bash.boundbackend.common.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -114,7 +115,18 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exception){
+//        // TODO - implemement application level logging
+//        exception.printStackTrace();
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exception.getMessage())
+                                .build()
+                );
 
-
+    }
 
 }
