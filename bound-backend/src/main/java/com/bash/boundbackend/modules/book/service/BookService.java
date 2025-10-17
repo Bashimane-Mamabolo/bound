@@ -17,8 +17,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Objects;
@@ -138,6 +140,7 @@ public class BookService {
         return bookId;
     }
 
+    // Owner archive or unarchive their book
     public Integer updateBookArchiveStatus(Integer bookId, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
         Book book = bookRepository.findById(bookId)
@@ -150,5 +153,31 @@ public class BookService {
         bookRepository.save(book);
 
         return bookId;
+    }
+
+    public Integer borrowBook(Integer bookId, Authentication connectedUser) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(()-> new EntityNotFoundException("No book found with Id: " + bookId));
+        if (book.isArchived() || !book.isShareable()) {
+            throw new OperationNotPermittedException("Book is archived or not shareable");
+        }
+        User user = (User) connectedUser.getPrincipal();
+        if (Objects.equals(user.getId(), book.getOwner().getId())) {
+            throw new OperationNotPermittedException("You cannot borrow your own book");
+        }
+
+        final boolean isAlreadyBorrowed = transactionRepository.isAlreadyBorrowedByAnotherUser(bookId, user.getId());
+
+        if (isAlreadyBorrowed) {
+            throw new OperationNotPermittedException("Book is already borrowed");
+        }
+        BookTransactionHistory transactionHistory = BookTransactionHistory.builder()
+                .user(user)
+                .book(book)
+                .bookReturned(false)
+                .bookReturned(false)
+                .build();
+        return transactionRepository.save(transactionHistory).getId();
     }
 }

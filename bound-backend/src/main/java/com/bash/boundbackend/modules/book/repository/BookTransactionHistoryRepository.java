@@ -23,4 +23,16 @@ public interface BookTransactionHistoryRepository extends JpaRepository<BookTran
             WHERE history.book.owner.id = :userId
             """)
     Page<BookTransactionHistory> findAllReturnedBooks(Pageable pageable, Integer userId);
+
+
+
+    // Does any other user currently have this book and hasn’t returned it?
+    @Query("""
+            SELECT (COUNT(*) > 0) AS isBorrowed
+            FROM BookTransactionHistory bookTransactionHistory
+            WHERE bookTransactionHistory.user.id <> :userId
+            AND bookTransactionHistory.book.id = :bookId
+            AND bookTransactionHistory.bookOwnerReturnApproved = false
+            """)
+    boolean isAlreadyBorrowedByAnotherUser(Integer bookId, Integer userId);
 }

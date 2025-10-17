@@ -38,7 +38,7 @@ public class Book extends AuditableEntity{
     private List<Feedback> feedbacks;
 
     // One book many transactions
-    @OneToMany
+    @OneToMany(mappedBy = "book")
     private List<BookTransactionHistory> bookTransactionHistoryList;
 
     // Calculate average book rating field

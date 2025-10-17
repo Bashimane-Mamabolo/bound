@@ -94,6 +94,16 @@ public class BookController {
         return ResponseEntity.ok(bookService.updateBookArchiveStatus(bookId, connectedUser));
     }
 
+    // Goal: A user wants to borrow a book from another user
+    // If successful, create a BookTransactionHistory record to primary checks
+    @PostMapping("/borrow/{book-id}")
+    public ResponseEntity<Integer> borrowBook(
+            @PathVariable("book-id") Integer bookId,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.borrowBook(bookId, connectedUser));
+    }
+
 
 
 
