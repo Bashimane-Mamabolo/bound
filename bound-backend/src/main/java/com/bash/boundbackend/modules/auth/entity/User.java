@@ -50,6 +50,7 @@ public class User implements UserDetails, Principal {
     private LocalDateTime modifiedAt;
 
     //List of roles List<Role> with Get Authorities
+    // One USER can have MANY roles. (Has)
     @ManyToMany(fetch = FetchType.EAGER) //eagerly fetch the list of roles
     private List<Role> roles;
 
