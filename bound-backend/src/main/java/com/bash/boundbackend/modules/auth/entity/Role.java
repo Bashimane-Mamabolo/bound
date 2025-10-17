@@ -27,6 +27,7 @@ public class Role {
     @Column(unique = true)  // No same role multiple times
     private String name;
 
+    // One can belong to MANY users (M:M) - normalize to 1:M relationship with an association table.
     @ManyToMany(mappedBy = "roles") //be careful of typos
     @JsonIgnore  // avoid serialization of this one as a response
     private List<User> users;

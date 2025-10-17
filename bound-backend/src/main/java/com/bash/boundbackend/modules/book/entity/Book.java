@@ -41,6 +41,20 @@ public class Book extends AuditableEntity{
     @OneToMany
     private List<BookTransactionHistory> bookTransactionHistoryList;
 
+    // Calculate average book rating field
+    @Transient
+    public double getBookRating(){
+        if (feedbacks == null){
+            return  0.0;
+        }
+        var averageBookRating = this.feedbacks.stream()
+                .mapToDouble(Feedback::getRating)
+                .average()
+                .orElse(0.0);
+        // round it to the nearest whole number e.g 4.5 -> 5.0
+        return Math.round(averageBookRating*100.0)/100.0;
+    }
+
 
 
 
