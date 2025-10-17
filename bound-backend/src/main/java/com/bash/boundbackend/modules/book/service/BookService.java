@@ -137,4 +137,18 @@ public class BookService {
 
         return bookId;
     }
+
+    public Integer updateBookArchiveStatus(Integer bookId, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(()-> new EntityNotFoundException("No book found with Id: " + bookId));
+        if (!Objects.equals(user.getId(), book.getOwner().getId())) {
+            // throw custom exception and handle this exception
+            throw new OperationNotPermittedException("Not authorized to update book's archived status");
+        }
+        book.setArchived(!book.isArchived()); //inverse the value, no hardcoding
+        bookRepository.save(book);
+
+        return bookId;
+    }
 }
