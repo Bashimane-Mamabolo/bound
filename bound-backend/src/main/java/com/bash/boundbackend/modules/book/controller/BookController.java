@@ -36,7 +36,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.findBookById(bookId));
     }
 
-
     // Pagination
     // Get the books for other users and not the connected user.
     // Shareable and not archived
@@ -47,6 +46,16 @@ public class BookController {
             Authentication connectedUser
     ){
         return ResponseEntity.ok(bookService.findAllDisplayableBooks(page, size, connectedUser));
+    }
+
+    // Implement specification (JpaSpecificationExecutor Interface). Avoid hardcoded SQL
+    @GetMapping("/by-owner")
+    public ResponseEntity<PageResponse<BookResponse>> findAllBooksByOwner(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.findAllBooksByOwner(page, size, connectedUser));
     }
 
 
