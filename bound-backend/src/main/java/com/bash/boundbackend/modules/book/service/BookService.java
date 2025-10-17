@@ -5,8 +5,11 @@ import com.bash.boundbackend.modules.auth.entity.User;
 import com.bash.boundbackend.modules.book.dto.BookMapper;
 import com.bash.boundbackend.modules.book.dto.request.BookRequest;
 import com.bash.boundbackend.modules.book.dto.response.BookResponse;
+import com.bash.boundbackend.modules.book.dto.response.BorrowedBookResponse;
 import com.bash.boundbackend.modules.book.entity.Book;
+import com.bash.boundbackend.modules.book.entity.BookTransactionHistory;
 import com.bash.boundbackend.modules.book.repository.BookRepository;
+import com.bash.boundbackend.modules.book.repository.BookTransactionHistoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +29,7 @@ public class BookService {
 
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
+    private final BookTransactionHistoryRepository transactionRepository;
 
     public Integer saveBook(BookRequest bookRequest, Authentication connectedUser) {
 
@@ -78,6 +82,24 @@ public class BookService {
                 books.getTotalPages(),
                 books.isFirst(),
                 books.isLast()
+        );
+    }
+
+    public PageResponse<BorrowedBookResponse> findAllBorrowedBooks(int page, int size, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("CreatedAt").descending());
+        Page<BookTransactionHistory> borrowedBooks = transactionRepository.findAllBorrowedBooks(pageable, user.getId());
+        List<BorrowedBookResponse> bookResponses = borrowedBooks.stream()
+                .map(bookMapper::toBorrowedBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                borrowedBooks.getNumber(),
+                borrowedBooks.getSize(),
+                borrowedBooks.getTotalElements(),
+                borrowedBooks.getTotalPages(),
+                borrowedBooks.isFirst(),
+                borrowedBooks.isLast()
         );
     }
 }

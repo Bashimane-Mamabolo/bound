@@ -2,7 +2,9 @@ package com.bash.boundbackend.modules.book.dto;
 
 import com.bash.boundbackend.modules.book.dto.request.BookRequest;
 import com.bash.boundbackend.modules.book.dto.response.BookResponse;
+import com.bash.boundbackend.modules.book.dto.response.BorrowedBookResponse;
 import com.bash.boundbackend.modules.book.entity.Book;
+import com.bash.boundbackend.modules.book.entity.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +36,19 @@ public class BookMapper {
                 .shareable(book.isShareable())
                 .ownerName(book.getOwner().getFullName())
                 //.bookCover() // TODO - LATER when file upload is implemented
+                .build();
+    }
+
+
+    public BorrowedBookResponse toBorrowedBookResponse(BookTransactionHistory bookHistory) {
+        return BorrowedBookResponse.builder()
+                .id(bookHistory.getBook().getId())
+                .title(bookHistory.getBook().getTitle())
+                .authorName(bookHistory.getBook().getAuthorName())
+                .isbn(bookHistory.getBook().getIsbn())
+                .averageBookRating(bookHistory.getBook().getBookRating())
+                .bookReturned(bookHistory.isBookReturned())
+                .bookOwnerReturnApproved(bookHistory.isBookOwnerReturnApproved())
                 .build();
     }
 }

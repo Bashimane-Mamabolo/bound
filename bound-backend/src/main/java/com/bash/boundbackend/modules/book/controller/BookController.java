@@ -3,7 +3,7 @@ package com.bash.boundbackend.modules.book.controller;
 import com.bash.boundbackend.common.utils.PageResponse;
 import com.bash.boundbackend.modules.book.dto.request.BookRequest;
 import com.bash.boundbackend.modules.book.dto.response.BookResponse;
-import com.bash.boundbackend.modules.book.entity.Book;
+import com.bash.boundbackend.modules.book.dto.response.BorrowedBookResponse;
 import com.bash.boundbackend.modules.book.service.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("books")
@@ -56,6 +55,16 @@ public class BookController {
             Authentication connectedUser
     ) {
         return ResponseEntity.ok(bookService.findAllBooksByOwner(page, size, connectedUser));
+    }
+
+    // Find all borrowed book
+    @GetMapping("/borrowed")
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllBorrowedBooks(
+            @RequestParam(name = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size,
+            Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.findAllBorrowedBooks(page, size, connectedUser));
     }
 
 
