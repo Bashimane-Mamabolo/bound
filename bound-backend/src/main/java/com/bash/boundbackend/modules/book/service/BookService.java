@@ -102,4 +102,22 @@ public class BookService {
                 borrowedBooks.isLast()
         );
     }
+
+    public PageResponse<BorrowedBookResponse> findAllReturnedBooks(int page, int size, Authentication connectedUser) {
+        User user = (User) connectedUser.getPrincipal();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("CreatedAt").descending());
+        Page<BookTransactionHistory> borrowedBooks = transactionRepository.findAllReturnedBooks(pageable, user.getId());
+        List<BorrowedBookResponse> bookResponses = borrowedBooks.stream()
+                .map(bookMapper::toBorrowedBookResponse)
+                .toList();
+        return new PageResponse<>(
+                bookResponses,
+                borrowedBooks.getNumber(),
+                borrowedBooks.getSize(),
+                borrowedBooks.getTotalElements(),
+                borrowedBooks.getTotalPages(),
+                borrowedBooks.isFirst(),
+                borrowedBooks.isLast()
+        );
+    }
 }

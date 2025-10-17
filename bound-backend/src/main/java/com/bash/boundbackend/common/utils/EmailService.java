@@ -1,4 +1,4 @@
-package com.bash.boundbackend.modules.auth.service;
+package com.bash.boundbackend.common.utils;
 
 import com.bash.boundbackend.common.constants.EmailTemplateName;
 import jakarta.mail.MessagingException;
