@@ -1,7 +1,7 @@
 package com.bash.boundbackend;
 
-import com.bash.boundbackend.entity.role.Role;
-import com.bash.boundbackend.repository.RoleRepository;
+import com.bash.boundbackend.modules.auth.entity.Role;
+import com.bash.boundbackend.modules.auth.repository.RoleRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @OpenAPIDefinition(
         info = @Info(
                 title = "Book Social CLUB API",
