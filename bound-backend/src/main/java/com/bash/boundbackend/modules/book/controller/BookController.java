@@ -129,17 +129,11 @@ public class BookController {
             @RequestPart("file") MultipartFile file,
             @PathVariable("book-id") Integer bookId,
             Authentication connectedUser
-//            @Parameter()
+            //@Parameter()
     ) {
         bookService.uploadBookCoverPicture(file, connectedUser, bookId);
         return ResponseEntity.accepted().build();
     }
-
-
-
-
-
-
 
 
 }
