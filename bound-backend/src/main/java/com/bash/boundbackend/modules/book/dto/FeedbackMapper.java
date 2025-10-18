@@ -1,9 +1,12 @@
 package com.bash.boundbackend.modules.book.dto;
 
 import com.bash.boundbackend.modules.book.dto.request.FeedbackRequest;
+import com.bash.boundbackend.modules.book.dto.response.FeedbackResponse;
 import com.bash.boundbackend.modules.book.entity.Book;
 import com.bash.boundbackend.modules.book.entity.Feedback;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class FeedbackMapper {
@@ -16,6 +19,14 @@ public class FeedbackMapper {
                         .id(feedbackRequest.bookId())
                         .build()
                 )
+                .build();
+    }
+
+    public FeedbackResponse toFeedbackResponse(Feedback feedback, Integer userId) {
+        return FeedbackResponse.builder()
+                .rating(feedback.getRating())
+                .comment(feedback.getComment())
+                .ownFeedback(Objects.equals(feedback.getCreatedBy(),userId)) // boolean
                 .build();
     }
 }

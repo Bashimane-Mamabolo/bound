@@ -1,20 +1,25 @@
 package com.bash.boundbackend.modules.book.service;
 
 import com.bash.boundbackend.common.exception.OperationNotPermittedException;
+import com.bash.boundbackend.common.utils.PageResponse;
 import com.bash.boundbackend.modules.auth.entity.User;
 import com.bash.boundbackend.modules.book.dto.FeedbackMapper;
 import com.bash.boundbackend.modules.book.dto.request.FeedbackRequest;
+import com.bash.boundbackend.modules.book.dto.response.FeedbackResponse;
 import com.bash.boundbackend.modules.book.entity.Book;
-import com.bash.boundbackend.modules.book.entity.BookTransactionHistory;
 import com.bash.boundbackend.modules.book.entity.Feedback;
 import com.bash.boundbackend.modules.book.repository.BookRepository;
 import com.bash.boundbackend.modules.book.repository.BookTransactionHistoryRepository;
 import com.bash.boundbackend.modules.book.repository.FeedbackRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -48,5 +53,25 @@ public class FeedbackService {
         Feedback feedback = feedbackMapper.toFeedback(feedbackRequest);
         return feedbackRepository.save(feedback).getId();
 
+    }
+
+    public PageResponse<FeedbackResponse> FindAllFeedbacksByBook(Authentication connectedUser, int page, int size, Integer bookId) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        User user = (User) connectedUser.getPrincipal();
+        Page<Feedback> feedbacks = feedbackRepository.findAllFeedbacksByBookId(bookId, pageable);
+        List<FeedbackResponse> feedbackResponses = feedbacks.stream()
+                .map(feedback -> feedbackMapper.toFeedbackResponse(feedback, user.getId()))
+                .toList();
+
+        return new PageResponse<>(
+                feedbackResponses,
+                feedbacks.getNumber(),
+                feedbacks.getSize(),
+                feedbacks.getTotalElements(),
+                feedbacks.getTotalPages(),
+                feedbacks.isFirst(),
+                feedbacks.isLast()
+        );
     }
 }
