@@ -15,3 +15,6 @@ springdoc:
 server:
   servlet:
     context-path: /api/v1/  #request mapping
+
+
+

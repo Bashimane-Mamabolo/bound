@@ -1,6 +1,7 @@
 package com.bash.boundbackend.modules.book.service;
 
 import com.bash.boundbackend.common.exception.OperationNotPermittedException;
+import com.bash.boundbackend.common.utils.FileStorageService;
 import com.bash.boundbackend.common.utils.PageResponse;
 import com.bash.boundbackend.modules.auth.entity.User;
 import com.bash.boundbackend.modules.book.dto.BookMapper;
@@ -17,10 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +34,7 @@ public class BookService {
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository transactionRepository;
+    private final FileStorageService fileStorageService;
 
     public Integer saveBook(BookRequest bookRequest, Authentication connectedUser) {
 
@@ -222,4 +223,27 @@ public class BookService {
         transactionHistory.setBookOwnerReturnApproved(true);
         return transactionRepository.save(transactionHistory).getId();
     }
+
+    public void uploadBookCoverPicture(MultipartFile file, Authentication connectedUser, Integer bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(()-> new EntityNotFoundException("No book found with Id: " + bookId));
+        User user = (User) connectedUser.getPrincipal();
+        var bookCoverPath = fileStorageService.saveFile(file, user.getId());
+        book.setBookCover(bookCoverPath);
+        bookRepository.save(book);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
