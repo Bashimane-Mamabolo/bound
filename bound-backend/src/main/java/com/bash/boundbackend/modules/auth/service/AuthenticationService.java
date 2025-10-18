@@ -1,6 +1,7 @@
 package com.bash.boundbackend.modules.auth.service;
 
 import com.bash.boundbackend.common.constants.EmailTemplateName;
+import com.bash.boundbackend.common.utils.EmailService;
 import com.bash.boundbackend.modules.auth.dto.request.UserAuthenticationRequest;
 import com.bash.boundbackend.modules.auth.dto.request.UserRegistrationRequest;
 import com.bash.boundbackend.modules.auth.dto.response.UserAuthenticationResponse;

@@ -40,6 +40,9 @@ application:
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
+  file:
+    upload:
+      images-output-path: ./book-covers   #In the root folder of our server/project
 # my server port
 server:
   port: 8088
