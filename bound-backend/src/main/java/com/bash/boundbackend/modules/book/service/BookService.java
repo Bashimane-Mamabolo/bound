@@ -175,7 +175,7 @@ public class BookService {
         BookTransactionHistory transactionHistory = BookTransactionHistory.builder()
                 .user(user)
                 .book(book)
-                .bookReturned(false)
+                .bookOwnerReturnApproved(false)
                 .bookReturned(false)
                 .build();
         return transactionRepository.save(transactionHistory).getId();
