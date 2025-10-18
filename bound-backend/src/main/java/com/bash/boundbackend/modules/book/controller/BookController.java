@@ -104,6 +104,26 @@ public class BookController {
         return ResponseEntity.ok(bookService.borrowBook(bookId, connectedUser));
     }
 
+    // Goal: As a user (borrower) I want to return a book I borrowed
+    @PatchMapping("/return-book/{book-id}")
+    public ResponseEntity<Integer> returnBorrowedBook(
+            @PathVariable("book-id") Integer bookId,
+            Authentication connectedUser
+    ){
+        return ResponseEntity.ok(bookService.returnBorrowedBook(bookId, connectedUser));
+    }
+
+    // Goal: As an owner of the returned book(by borrower), I want to approve it
+    @PatchMapping("/return-approve/{book-id}")
+    public ResponseEntity<Integer> approvedReturnedBook(
+            @PathVariable("book-id") Integer bookId,
+            Authentication connectedUser
+    ){
+        return ResponseEntity.ok(bookService.approveReturnedBook(bookId, connectedUser));
+    }
+
+
+
 
 
 
