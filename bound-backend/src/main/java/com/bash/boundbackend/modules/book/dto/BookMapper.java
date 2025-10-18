@@ -1,5 +1,6 @@
 package com.bash.boundbackend.modules.book.dto;
 
+import com.bash.boundbackend.common.utils.FileReadUtils;
 import com.bash.boundbackend.modules.book.dto.request.BookRequest;
 import com.bash.boundbackend.modules.book.dto.response.BookResponse;
 import com.bash.boundbackend.modules.book.dto.response.BorrowedBookResponse;
@@ -35,7 +36,7 @@ public class BookMapper {
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
                 .ownerName(book.getOwner().getFullName())
-                //.bookCover() // TODO - LATER when file upload is implemented
+                .bookCover(FileReadUtils.readFileFromLocation(book.getBookCover()))  // read book cover image from location
                 .build();
     }
 
