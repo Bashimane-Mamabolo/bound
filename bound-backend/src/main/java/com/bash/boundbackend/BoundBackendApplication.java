@@ -15,22 +15,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
-@OpenAPIDefinition(
-        info = @Info(
-                title = "Book Social CLUB API",
-                version = "1.0",
-                description = "REST API for managing book sharing and social interactions.",
-                contact = @Contact(
-                        name = "Bashimane Mamabolo",
-                        email = "bash@gmail.com",
-                        url = "https://github.com/Bashimane-Mamabolo"
-                ),
-                license = @License(
-                        name = "MIT License",
-                        url = "https://opensource.org/licenses/MIT"
-                )
-        )
-)
+
 @EnableAsync
 public class BoundBackendApplication {
 

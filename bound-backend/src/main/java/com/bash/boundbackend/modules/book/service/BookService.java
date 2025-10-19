@@ -168,7 +168,7 @@ public class BookService {
             throw new OperationNotPermittedException("You cannot borrow your own book");
         }
 
-        final boolean isAlreadyBorrowed = transactionRepository.isAlreadyBorrowed(bookId, user.getId());
+        final boolean isAlreadyBorrowed = transactionRepository.isAlreadyBorrowed(bookId);  // TODO - removed user.getUserId()
 
         if (isAlreadyBorrowed) {
             throw new OperationNotPermittedException("Book is already borrowed");

@@ -9,12 +9,18 @@ spring:
 
 # Openapi swagger setup
 springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    url: /v3/api-docs
+
   default-produces-media-type: application/json
 
 #Servelet server-routes setup
 server:
   servlet:
-    context-path: /api/v1/  #request mapping
+    context-path: /api/v1  #request mapping
 
 
 
