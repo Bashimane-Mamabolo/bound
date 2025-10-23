@@ -1,6 +1,6 @@
 # Ignore backend temporarily
 bound-backend/
-
+/.idea
 
 # FRONTEND
 # Compiled output
