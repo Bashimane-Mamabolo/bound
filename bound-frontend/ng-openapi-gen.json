@@ -1,0 +1,14 @@
+{
+  "input": "./src/openapi/openapi.json",
+  "output": "./src/app/services",
+  "generateModels": true,
+  "generateServices": true,
+  "generateFunctions": true,
+
+  "services": true,
+  "module": false,
+  "apiService": "Api",
+  "enumStyle": "alias",
+  "enumArray": true,
+  "promises": false
+}
