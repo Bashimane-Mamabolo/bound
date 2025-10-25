@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
-import { AuthenticationnControllerService } from "src/app/services/services/authenticationn-controller.service";
+import { AuthenticationControllerService } from "src/app/services/services/authentication-controller.service";
+
+
 
 @Component({
   selector: 'app-activate-account',
@@ -15,7 +17,7 @@ export class ActivateAccountComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationnControllerService
+    private authService: AuthenticationControllerService
   ) {
   }
 
@@ -28,7 +30,7 @@ export class ActivateAccountComponent {
   }
 
   private confirmAccount(code: string) {
-    this.authService.confirmAccount({
+    this.authService.activateUserAccount({
       code
     }).subscribe(
       {
