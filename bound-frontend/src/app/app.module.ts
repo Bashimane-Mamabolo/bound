@@ -22,7 +22,8 @@ import { CodeInputModule } from 'angular-code-input';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CodeInputModule
+    CodeInputModule,
+
   ],
   providers: [
     HttpClient
