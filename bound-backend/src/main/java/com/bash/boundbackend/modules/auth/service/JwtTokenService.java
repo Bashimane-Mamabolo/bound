@@ -3,6 +3,7 @@ package com.bash.boundbackend.modules.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +57,7 @@ public class JwtTokenService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtTokenExpiration))
                 .claim("authorities", authorities)
-                .signWith(getSignInKey())
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -69,7 +70,7 @@ public class JwtTokenService {
         final String username = extractUsername(jwtToken);
         return (username.equals(userDetails.getUsername()))
                 &&
-                isJwtTokenExpired(jwtToken);
+                !isJwtTokenExpired(jwtToken);
     }
 
     private boolean isJwtTokenExpired(String jwtToken) {

@@ -39,7 +39,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         // Permit authentication requests to pass through to the next filter
-        if (request.getServletPath().contains(basePath+"auth")) {
+        if (request.getServletPath().contains(basePath+"/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
