@@ -22,7 +22,8 @@
   </div>
   <div class="card-footer d-flex gap-2 justify-content-between align-items-center">
     <div class="d-flex gap-2">
-      5 stars
+      <app-rating [rating]="book.averageBookRating || 0"></app-rating>
+      <span class="fw-bold" *ngIf="book.averageBookRating || 0 > 0">{{book.averageBookRating}}</span>
     </div>
     <div class="d-flex gap-2" *ngIf="!manage">
       <i (click)="onShowDetails()" class="fas fa-circle-info text-primary"></i>
