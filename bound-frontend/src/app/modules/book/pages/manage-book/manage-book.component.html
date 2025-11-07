@@ -27,6 +27,39 @@
         >
       </div>
     </div>
+    <div class="col-9">
+      <form class="row gap-3">
+        <div class="col-12">
+          <label for="title" class="form-label">Title</label>
+          <input [(ngModel)]="bookRequest.title" name="title" type="text" class="form-control" id="title" placeholder="order of the phoenix">
+        </div>
+        <div class="col-6">
+          <label for="author" class="form-label">Author name</label>
+          <input [(ngModel)]="bookRequest.authorName" name="author" type="text" class="form-control" id="author" placeholder="j.k rowling">
+        </div>
+        <div class="col-6">
+          <label for="isbn" class="form-label">ISBN</label>
+          <input [(ngModel)]="bookRequest.isbn" type="text" name="isbn" class="form-control" id="isbn" placeholder="101113310">
+        </div>
+        <div class="col-12">
+          <label for="synopsis" class="form-label">Synopsis</label>
+          <textarea [(ngModel)]="bookRequest.synopsis" name="synopsis" rows="4" class="form-control" id="synopsis" placeholder="Harry and order of the phoenix rally together to go after Lord Voldemort"></textarea>
+        </div>
+        <div class="col-12">
+          <input [(ngModel)]="bookRequest.shareable" name="shareme" type="checkbox" class="form-check-input" id="shareme" >
+          <label for="shareme" class="form-check-label"> Share me</label>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 col-12">
+          <button (click)="saveBook()" type="submit" class="btn btn-outline-primary">
+            <i class="fas fa-save"></i>&nbsp;Save
+          </button>
+          <a routerLink="/books/my-books" class="btn btn-link text-danger">
+            <i class="fas fa-times"></i>&nbsp;Cancel
+          </a>
+        </div>
+      </form>
+    </div>
 
   </div>
 </div>
