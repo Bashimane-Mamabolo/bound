@@ -7,6 +7,13 @@ import { BookResponse } from "src/app/services/models/book-response";
   styleUrls: ['./book-card.component.scss']
 })
 export class BookCardComponent {
+  @Output() private share: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+  @Output() private archive: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+  @Output() private addToWaitingList: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+  @Output() private borrow: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+  @Output() private edit: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+  @Output() private details: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
+
   private _book: BookResponse = {};
 
   get book(): BookResponse {
@@ -39,16 +46,6 @@ export class BookCardComponent {
   set manage(value: boolean) {
     this._manage = value;
   }
-
-  @Output() private share: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-  @Output() private archive: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-  @Output() private addToWaitingList: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-  @Output() private borrow: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-  @Output() private edit: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-  @Output() private details: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
-
-
-
 
   protected onShowDetails() {
     this.details.emit(this._book);

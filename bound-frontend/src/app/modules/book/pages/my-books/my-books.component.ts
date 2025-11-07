@@ -78,6 +78,6 @@ export class MyBooksComponent implements OnInit{
   }
 
   protected editBook(book: BookResponse) {
-
+    this.router.navigate(['books', 'manage', book.id]);
   }
 }
