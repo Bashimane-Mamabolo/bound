@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BookService} from 'src/app/services/services/book.service'
 import { Router } from "@angular/router";
-import { PageResponseBookResponse } from "src/app/services/models";
+import {BookResponse, PageResponseBookResponse } from "src/app/services/models";
 
 @Component({
   selector: 'app-book-list',
@@ -10,8 +10,9 @@ import { PageResponseBookResponse } from "src/app/services/models";
 })
 export class BookListComponent implements OnInit {
   page = 0;
-  size = 5;
+  size = 3;
   bookResponse: PageResponseBookResponse = {};
+  // isLastPage: boolean = false;
 
   constructor(
     private bookService: BookService,
@@ -37,6 +38,38 @@ export class BookListComponent implements OnInit {
 
       }
     })
+
+  }
+
+  protected gotoFirstPage() {
+    this.page = 0;
+    this.findAllBooks();
+  }
+
+  protected goToPreviousPage() {
+    this.page--;
+    this.findAllBooks();
+  }
+
+  protected goToPage(page: number) {
+    this.page = page;
+    this.findAllBooks();
+  }
+
+  protected goToNextPage() {
+    this.page++;
+    this.findAllBooks();
+  }
+
+  protected goToLastPage() {
+    this.page = this.bookResponse.totalPages as number -1;
+  }
+
+  get isLastPage(): boolean {
+    return this.page == this.bookResponse.totalPages as number - 1;
+  }
+
+  protected borrowBook(book: BookResponse) {
 
   }
 }
