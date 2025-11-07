@@ -1,0 +1,32 @@
+<div class="p-2" >
+  <h2>Manage My book</h2>
+  <hr>
+  <div
+    class="alert alert-danger mt-2"
+    role="alert"
+    *ngIf="errorMessage.length"
+  >
+    <p class="p-0 m-0" *ngFor="let msg of errorMessage">{{msg}}</p>
+  </div>
+  <div class="d-flex gap-2">
+    <div class="col-3">
+      <img
+        class="rounded-1"
+        width="100%"
+        height="100%"
+        [src]="selectedPicture || 'https://picsum.photos/200/300'"
+        alt="my book image"
+      >
+      <div class="mt-2">
+        <input
+          (change)="onFileSelected($event)"
+          class="form-control"
+          type="file"
+          id="formFile"
+          accept="image/*"
+        >
+      </div>
+    </div>
+
+  </div>
+</div>
