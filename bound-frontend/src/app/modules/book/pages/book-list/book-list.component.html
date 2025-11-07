@@ -1,4 +1,12 @@
 <h3>Books list</h3>
+<div
+  *ngIf="message"
+  class="alert"
+  [class.alert-success]="level === 'success'"
+  [class.alert-danger]="level === 'error'"
+>
+{{message}}
+</div>
 <hr>
 <div class="d-flex justify-content-start gap-2 flex-wrap">
   <app-book-card

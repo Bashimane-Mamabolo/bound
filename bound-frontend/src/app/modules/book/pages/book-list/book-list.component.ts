@@ -13,6 +13,8 @@ export class BookListComponent implements OnInit {
   size = 3;
   bookResponse: PageResponseBookResponse = {};
   // isLastPage: boolean = false;
+  message = '';
+  level = 'success';
 
   constructor(
     private bookService: BookService,
@@ -70,6 +72,19 @@ export class BookListComponent implements OnInit {
   }
 
   protected borrowBook(book: BookResponse) {
-
+    this.message = '';
+    this.bookService.borrowBook({
+      'book-id': book.id as number
+    }).subscribe({
+      next: () => {
+        this.level = 'success';
+        this.message = 'Added to your list, successfully borrowed book';
+      },
+      error: (err) => {
+        console.log(err);
+        this.level = 'error';
+        this.message = err.error.error;
+      }
+    });
   }
 }
