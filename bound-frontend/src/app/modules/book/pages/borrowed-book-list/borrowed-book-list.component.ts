@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {BorrowedBookResponse} from "../../../../services/models/borrowed-book-response";
 import {PageResponseBorrowedBookResponse} from "../../../../services/models/page-response-borrowed-book-response";
 import {BookService} from "../../../../services/services/book.service";
+import {FeedbackRequest} from "../../../../services/models/feedback-request";
+import {FeedbackService} from "../../../../services/services/feedback.service";
 
 @Component({
   selector: 'app-borrowed-book-list',
@@ -13,9 +15,12 @@ export class BorrowedBookListComponent implements OnInit {
   borrowedBooks: PageResponseBorrowedBookResponse = {};
   page = 0;
   size = 5;
+  selectedBook: BorrowedBookResponse | undefined = undefined;
+  feedbackRequest: FeedbackRequest = {bookId: 0, comment: '', rating: 0};
 
   constructor(
-    private bookService: BookService
+    private bookService: BookService,
+    private feedbackService: FeedbackService
 
   ) {
   }
@@ -24,7 +29,25 @@ export class BorrowedBookListComponent implements OnInit {
     this.findAllBorrowedBooks();
   }
 
-  returnBorrowedBook(book: BorrowedBookResponse) {}
+  returnBook(withFeedback: boolean) {
+    this.bookService.returnBorrowedBook({
+      'book-id': this.selectedBook?.id as number
+    }).subscribe({
+      next: () => {
+        if (withFeedback) {
+          this.giveFeedback();
+        }
+        this.selectedBook = undefined;
+        this.findAllBorrowedBooks();
+      }
+    })
+  }
+
+  returnBorrowedBook(book: BorrowedBookResponse) {
+    this.selectedBook = book;
+    this.feedbackRequest.bookId = book.id as number;
+
+  }
 
   private findAllBorrowedBooks() {
     this.bookService.findAllBorrowedBooks({
@@ -63,5 +86,13 @@ export class BorrowedBookListComponent implements OnInit {
 
   get isLastPage(): boolean {
     return this.page == this.borrowedBooks.totalPages as number - 1;
+  }
+
+  private giveFeedback() {
+    this.feedbackService.saveFeedback({
+      body: this.feedbackRequest
+    }).subscribe({
+      next: () => {}
+    });
   }
 }
