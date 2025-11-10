@@ -23,7 +23,6 @@ public class BoundBackendApplication {
 
         SpringApplication.run(BoundBackendApplication.class, args);
 
-
     }
 
     @Bean

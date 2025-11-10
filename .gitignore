@@ -1,5 +1,5 @@
 # Ignore backend temporarily
-bound-backend/
+#bound-backend/
 /.idea
 
 # FRONTEND
