@@ -92,7 +92,7 @@ public class BookService {
 
     public PageResponse<BorrowedBookResponse> findAllBorrowedBooks(int page, int size, Authentication connectedUser) {
         User user = (User) connectedUser.getPrincipal();
-        Pageable pageable = PageRequest.of(page, size, Sort.by("CreatedAt").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<BookTransactionHistory> borrowedBooks = transactionRepository.findAllBorrowedBooks(pageable, user.getId());
         List<BorrowedBookResponse> bookResponses = borrowedBooks.stream()
                 .map(bookMapper::toBorrowedBookResponse)

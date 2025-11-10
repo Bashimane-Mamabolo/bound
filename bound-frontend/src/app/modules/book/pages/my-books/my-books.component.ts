@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {BookService} from 'src/app/services/services/book.service'
 import { Router } from "@angular/router";
 import {BookResponse, PageResponseBookResponse } from "src/app/services/models";
+import { BookService } from "src/app/services/services";
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.scss']
+  selector: 'app-my-books',
+  templateUrl: './my-books.component.html',
+  styleUrls: ['./my-books.component.scss']
 })
-export class BookListComponent implements OnInit {
+export class MyBooksComponent implements OnInit{
   page = 0;
   size = 3;
   bookResponse: PageResponseBookResponse = {};
   // isLastPage: boolean = false;
-  message = '';
-  level = 'success';
 
   constructor(
     private bookService: BookService,
@@ -23,11 +21,11 @@ export class BookListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-        this.findAllBooks()
-    }
+    this.findAllBooks()
+  }
 
   private findAllBooks() {
-    this.bookService.findAllDisplayableBooks(
+    this.bookService.findAllBooksByOwner(
       {
         page: this.page,
         size: this.size
@@ -71,20 +69,27 @@ export class BookListComponent implements OnInit {
     return this.page == this.bookResponse.totalPages as number - 1;
   }
 
-  protected borrowBook(book: BookResponse) {
-    this.message = '';
-    this.bookService.borrowBook({
+  protected archiveBook(book: BookResponse) {
+    this.bookService.updateBookArchiveStatus({
       'book-id': book.id as number
     }).subscribe({
       next: () => {
-        this.level = 'success';
-        this.message = 'Added to your list, successfully borrowed book';
-      },
-      error: (err) => {
-        console.log(err);
-        this.level = 'error';
-        this.message = err.error.error;
+        book.archived = !book.archived;
       }
     });
+  }
+
+  protected shareBook(book: BookResponse) {
+    this.bookService.bookShareableStatus({
+      'book-id': book.id as number
+    }).subscribe({
+      next: () => {
+        book.shareable = !book.shareable;
+      }
+    });
+  }
+
+  protected editBook(book: BookResponse) {
+    this.router.navigate(['books', 'manage', book.id]);
   }
 }
