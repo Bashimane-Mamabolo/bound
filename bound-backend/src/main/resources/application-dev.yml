@@ -1,7 +1,8 @@
 spring:
   # database setup
   datasource:
-    url: jdbc:postgresql://localhost:5432/bound_social_club
+#    url: jdbc:postgresql://localhost:5432/bound_social_club
+    url: jdbc:postgresql://postgres-sql-bsc:5432/book_social_club
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
