@@ -17,7 +17,7 @@ COPY --from=build /build/target/bound-backend-*.jar /app/
 
 EXPOSE 8088
 
-ENV DB_URL=jdbc:postgresql://postgres-sql-bsc:5432/bound_social_club
+ENV DB_URL=jdbc:postgresql://postgres-sql-bsc:5432/book_social_club
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 

@@ -24,6 +24,21 @@ services:
       - 1080:1080
       - 1025:1025
 
+# Springboot backend book social clund
+  bsc-api:
+    container_name: bsc-api
+    image: bsc/bsc:0.0.1
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#      - DB_URL=jdbc:postgresql://postgres-sql-bsc:5432/bound_social_club
+    ports:
+      - 8088:8088
+    networks:
+      - bound-bsc
+    depends_on:
+      - postgres
+
 # Networks - local
 networks:
   bound-bsc:
