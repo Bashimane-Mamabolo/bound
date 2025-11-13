@@ -24,7 +24,7 @@ services:
       - 1080:1080
       - 1025:1025
 
-# Springboot backend book social clund
+# Springboot backend book social club
   bsc-api:
     container_name: bsc-api
     image: bsc/bsc:0.0.1
@@ -38,6 +38,17 @@ services:
       - bound-bsc
     depends_on:
       - postgres
+
+# Angular frontend book social club with nginx
+  bsc-ui:
+    container_name: bsc-ui
+    image: bsc/bsc-ui:0.0.1
+    ports:
+      - 8080:80
+    networks:
+      - bound-bsc
+    depends_on:
+      - bsc-api
 
 # Networks - local
 networks:
