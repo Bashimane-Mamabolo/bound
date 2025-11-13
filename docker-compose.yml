@@ -21,14 +21,18 @@ services:
     container_name: mail-dev-bsc
     image: maildev/maildev
     ports:
-      - 1080:1080
-      - 1025:1025
+      - 1080:1080  #Web UI
+      - 1025:1025  #SMTP
+    networks:
+      - bound-bsc
 
-# Springboot backend book social clund
+# Springboot backend book social club
   bsc-api:
     container_name: bsc-api
-    image: bsc/bsc:0.0.1
+    image: bsc/bsc:1.0.1
     environment:
+      - SPRING_MAIL_HOST=mail-dev-bsc # <-- Use the container name here
+      - SPRING_MAIL_PORT=1025          # <-- Ensure the port is set (though 1025 is default)
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 #      - DB_URL=jdbc:postgresql://postgres-sql-bsc:5432/bound_social_club
@@ -38,6 +42,18 @@ services:
       - bound-bsc
     depends_on:
       - postgres
+      - mail-dev
+
+# Angular frontend book social club with nginx
+  bsc-ui:
+    container_name: bsc-ui
+    image: bsc/bsc-ui:0.0.1
+    ports:
+      - 8080:80
+    networks:
+      - bound-bsc
+    depends_on:
+      - bsc-api
 
 # Networks - local
 networks:
