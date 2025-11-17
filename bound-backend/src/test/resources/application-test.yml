@@ -1,0 +1,25 @@
+# src/test/resources/application-test.yml
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  # H2 Database Config for Tests
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # Creates schema then drops it after tests
+    database-platform: org.hibernate.dialect.H2Dialect
+
+
+# Custom app settings needed for the service
+application:
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+

@@ -29,7 +29,7 @@ services:
 # Springboot backend book social club
   bsc-api:
     container_name: bsc-api
-    image: bsc/bsc:1.0.1
+    image: simon023a/bsc-api:latest
     environment:
       - SPRING_MAIL_HOST=mail-dev-bsc # <-- Use the container name here
       - SPRING_MAIL_PORT=1025          # <-- Ensure the port is set (though 1025 is default)

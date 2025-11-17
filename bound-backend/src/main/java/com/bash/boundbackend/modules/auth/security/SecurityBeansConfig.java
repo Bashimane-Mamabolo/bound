@@ -1,7 +1,9 @@
 package com.bash.boundbackend.modules.auth.security;
 
 import com.bash.boundbackend.config.ApplicationAuditConfig;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -30,6 +32,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class SecurityBeansConfig {
 
+    @Value("${application.cors.origins:*}") //default value will be star
+    private List<String> allowedCorsOrigins;
     private final UserDetailsService userDetailsService;
 
     @Bean
@@ -63,21 +67,10 @@ public class SecurityBeansConfig {
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8080"));
-        config.setAllowedHeaders(Arrays.asList(
-                ORIGIN,
-                CONTENT_TYPE,
-                ACCEPT,
-                AUTHORIZATION
-        ));
-        config.setAllowedMethods(Arrays.asList(
-                "GET",
-                "POST",
-                "PUT",
-                "DELETE",
-                "PATCH"
-        ));
+//        config.setAllowCredentials(true);
+        config.setAllowedOrigins(allowedCorsOrigins);  // This adjustments with dealing with deployment/deployed applications issues
+        config.setAllowedHeaders(Arrays.asList("*")); // Not recommended for production
+        config.setAllowedMethods(Arrays.asList("*"));
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }

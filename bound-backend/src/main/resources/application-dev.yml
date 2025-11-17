@@ -41,6 +41,8 @@ application:
   mailing:
     frontend:
       activation-url: http://localhost:4200/activate-account
+  cors:
+    origins: http://localhost:4200,http://localhost:8080 #,VPS IP ADDRESSES HERE for frontend and backend
   file:
     upload:
       images-output-path: ./book-covers   #In the root folder of our server/project
