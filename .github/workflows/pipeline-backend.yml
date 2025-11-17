@@ -130,7 +130,7 @@ jobs:
             APP_VERSION=${{ steps.extract_version.outputs.VERSION }}
 
   # -------------------------------------------------------
-  # OPTIONAL: VPS DEPLOY (DISABLED)
+  # OPTIONAL: VPS DEPLOY BACKEND (DISABLED)
   # -------------------------------------------------------
   # deploy:
   #   ...
